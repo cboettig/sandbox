@@ -4,4 +4,4 @@ Requires the geiger package, from within R, run:
 To run the source file type:
 	source("primates.R")
 
-
+See notebook for details on this project: http://openwetware.org/wiki/User:Daniel_Mietchen/Notebook/Evolutionary_MRI/2010/04/29#R_code_to_create_figure
