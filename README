@@ -1,0 +1,7 @@
+Requires R >= 2.8
+Requires the geiger package, from within R, run:
+	install.packages("geiger")
+To run the source file type:
+	source("primates.R")
+
+
