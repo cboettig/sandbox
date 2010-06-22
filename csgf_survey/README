@@ -1,0 +1,8 @@
+Presentation summary of the data on computing practices within the Computational Sciences Graduate Fellowship Program.  
+
+Presentation slides in beamer via presentation.tex, presenation.pdf
+
+Raw data in Sheet_1.csv, http://github.com/cboettig/sandbox/blob/master/csgf_survey/Sheet_1.csv
+
+Some primitive funtions for analyzing data in R are in csgf_survey.R, http://github.com/cboettig/sandbox/blob/master/csgf_survey/csgf_survey.R
+
