@@ -1,0 +1,5 @@
+\beamer@endinputifotherversion {3.07pt}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Languages}{5}{0}{2}
+\beamer@sectionintoc {3}{Good Practices}{20}{0}{3}
+\beamer@sectionintoc {4}{Communication \& Web 2.0}{27}{0}{4}

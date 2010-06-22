@@ -1,7 +1,1 @@
-Install the R package with:
-	R CMD INSTALL sandbox_0.0-1.tar.gz
-Within R, load the package and run example:
-	> load(sandbox)
-	> example()
-
-See notebook for details on this project: http://openwetware.org/wiki/User:Daniel_Mietchen/Notebook/Evolutionary_MRI/2010/04/29#R_code_to_create_figure
+Various code fragments
