@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.5.6)  21 JUN 2010 21:47
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.5.6)  22 JUN 2010 06:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -781,185 +781,198 @@ Dictionary: translator-theorem-dictionary, Language: English
 
 ] [5
 
-] <compiled.pdf, id=62, 1011.78pt x 505.89pt>
+] [6
+
+] [7
+
+] [8
+
+]
+<compiled.pdf, id=81, 1011.78pt x 505.89pt>
 File: compiled.pdf Graphic file (type pdf)
+ <use compiled.pdf> [9
 
-<use compiled.pdf> [6
-
- <./compiled.pdf>]
-<fortran77.pdf, id=73, 1011.78pt x 505.89pt>
+ <./compiled.pdf>] <fortran77.pdf, id=92, 1011.78pt x 505.89pt>
 File: fortran77.pdf Graphic file (type pdf)
- <use fortran77.pdf> [7
+ <use fortran77.pdf> [10
 
- <./fortran77.pdf>] <scripting.pdf, id=85, 1011.78pt x 505.89pt>
+ <./fortran77.pdf>] <scripting.pdf, id=103, 1011.78pt x 505.89pt>
 File: scripting.pdf Graphic file (type pdf)
- <use scripting.pdf>
-[8
+
+<use scripting.pdf> [11
 
  <./scripting.pdf>]
 File: scripting.pdf Graphic file (type pdf)
- <use scripting.pdf> [9
+ <use scripting.pdf> [12
 
 ]
-<R.pdf, id=102, 505.89pt x 505.89pt>
+<R.pdf, id=120, 505.89pt x 505.89pt>
 File: R.pdf Graphic file (type pdf)
  <use R.pdf>
-Overfull \vbox (0.67249pt too high) detected at line 87
+Overfull \vbox (0.67249pt too high) detected at line 89
  []
 
-[10
+[13
 
- <./R.pdf>] <multilingual.pdf, id=113, 505.89pt x 505.89pt>
+ <./R.pdf>] <multilingual.pdf, id=132, 505.89pt x 505.89pt>
 File: multilingual.pdf Graphic file (type pdf)
 
 <use multilingual.pdf>
-Overfull \vbox (18.67249pt too high) detected at line 91
+Overfull \vbox (18.67249pt too high) detected at line 93
  []
 
-[11
+[14
 
- <./multilingual.pdf>] [12
+ <./multilingual.pdf>] [15
 
 ]
-<some_parallel.pdf, id=130, 1011.78pt x 505.89pt>
+<some_parallel.pdf, id=149, 1011.78pt x 505.89pt>
 File: some_parallel.pdf Graphic file (type pdf)
  <use some_parallel.pdf>
-[13
+[16
 
- <./some_parallel.pdf>] <obsessed.pdf, id=142, 1011.78pt x 505.89pt>
+ <./some_parallel.pdf>] <obsessed.pdf, id=160, 1011.78pt x 505.89pt>
 File: obsessed.pdf Graphic file (type pdf)
 
-<use obsessed.pdf> [14
+<use obsessed.pdf> [17
 
  <./obsessed.pdf>]
-<gpu.pdf, id=153, 1011.78pt x 505.89pt>
+<gpu.pdf, id=171, 1011.78pt x 505.89pt>
 File: gpu.pdf Graphic file (type pdf)
- <use gpu.pdf> [15
+ <use gpu.pdf> [18
 
  <./gpu.pdf>]
-LaTeX Font Info:    Try loading font information for U+msa on input line 110.
+LaTeX Font Info:    Try loading font information for U+msa on input line 112.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 110.
+LaTeX Font Info:    Try loading font information for U+msb on input line 112.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 110.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 112.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <8> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 110.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 112.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <6> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 110.
- [16
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 112.
+ [19
 
 ]
-<tux.png, id=170, 265.99374pt x 315.1775pt>
+<tux.png, id=189, 265.99374pt x 315.1775pt>
 File: tux.png Graphic file (type png)
- <use tux.png> [17
+ <use tux.png> [20
 
  <./tux.png>]
 File: tux.png Graphic file (type png)
 
-<use tux.png> [18
+<use tux.png> [21
 
-] <os.png, id=185, 602.25pt x 451.6875pt>
+] <os.png, id=204, 602.25pt x 451.6875pt>
 File: os.png Graphic file (type png)
  <use os.png>
-[19
+[22
 
- <./os.png>] [20
+ <./os.png>] [23
 
-] <good_practices.png, id=200, 602.25pt x 451.6875pt>
+] <good_practices.png, id=218, 602.25pt x 451.6875pt>
 File: good_practices.png Graphic file (type png)
 
 <use good_practices.png>
-Overfull \vbox (0.67358pt too high) detected at line 134
- []
-
-[21
-
- <./good_practices.png>] <bad_practices.png, id=208, 602.25pt x 451.6875pt>
-File: bad_practices.png Graphic file (type png)
-
-<use bad_practices.png>
-Overfull \vbox (0.67358pt too high) detected at line 137
- []
-
-[22
-
- <./bad_practices.png>] <carpentry.pdf, id=216, 505.89pt x 505.89pt>
-File: carpentry.pdf Graphic file (type pdf)
-
-<use carpentry.pdf>
-Overfull \vbox (1.3398pt too high) detected at line 143
- []
-
-[23
-
- <./carpentry.pdf>]
-File: carpentry.pdf Graphic file (type pdf)
- <use carpentry.pdf>
-Overfull \vbox (1.3398pt too high) detected at line 143
+Overfull \vbox (0.67358pt too high) detected at line 136
  []
 
 [24
 
-] [25
+ <./good_practices.png>] <bad_practices.png, id=226, 602.25pt x 451.6875pt>
+File: bad_practices.png Graphic file (type png)
 
-] <visualize.pdf, id=240, 794.97pt x 614.295pt>
-File: visualize.pdf Graphic file (type pdf)
- <use visualize.pdf>
-Overfull \vbox (9.91652pt too high) detected at line 159
+<use bad_practices.png>
+Overfull \vbox (0.67358pt too high) detected at line 139
+ []
+
+[25
+
+ <./bad_practices.png>] <carpentry.pdf, id=235, 505.89pt x 505.89pt>
+File: carpentry.pdf Graphic file (type pdf)
+
+<use carpentry.pdf>
+Overfull \vbox (1.3398pt too high) detected at line 145
  []
 
 [26
 
- <./visualize.pdf>] [27
-
-] <collab.png, id=263, 602.25pt x 451.6875pt>
-File: collab.png Graphic file (type png)
-
-<use collab.png>
-Overfull \hbox (14.58476pt too wide) in paragraph at lines 171--171
-\OT1/phv/m/n/10.95 ...[]  
+ <./carpentry.pdf>]
+File: carpentry.pdf Graphic file (type pdf)
+ <use carpentry.pdf>
+Overfull \vbox (1.3398pt too high) detected at line 145
  []
 
+[27
 
-Overfull \vbox (16.55661pt too high) detected at line 171
- []
+] [28
 
-[28
-
- <./collab.png>] <social.png, id=271, 602.25pt x 451.6875pt>
-File: social.png Graphic file (type png)
-
-<use social.png>
-Overfull \vbox (16.27606pt too high) detected at line 177
+] <visualize.pdf, id=258, 794.97pt x 614.295pt>
+File: visualize.pdf Graphic file (type pdf)
+ <use visualize.pdf>
+Overfull \vbox (9.91652pt too high) detected at line 161
  []
 
 [29
 
- <./social.png>] <reading.png, id=279, 602.25pt x 451.6875pt>
-File: reading.png Graphic file (type png)
+ <./visualize.pdf>] [30
 
-<use reading.png>
-Overfull \vbox (0.67358pt too high) detected at line 181
+] <collab.png, id=281, 602.25pt x 451.6875pt>
+File: collab.png Graphic file (type png)
+
+<use collab.png>
+Overfull \hbox (14.58476pt too wide) in paragraph at lines 173--173
+\OT1/phv/m/n/10.95 ...[]  
  []
 
-[30
 
- <./reading.png>] <open.png, id=287, 602.25pt x 451.6875pt>
-File: open.png Graphic file (type png)
- <use open.png>
-Overfull \vbox (0.67358pt too high) detected at line 186
+Overfull \vbox (16.55661pt too high) detected at line 173
  []
 
 [31
 
+ <./collab.png>] <social.png, id=290, 602.25pt x 451.6875pt>
+File: social.png Graphic file (type png)
+
+<use social.png>
+Overfull \vbox (16.27606pt too high) detected at line 179
+ []
+
+[32
+
+ <./social.png>] <reading.png, id=298, 602.25pt x 451.6875pt>
+File: reading.png Graphic file (type png)
+
+<use reading.png>
+Overfull \vbox (0.67358pt too high) detected at line 183
+ []
+
+[33
+
+ <./reading.png>] <open.png, id=306, 602.25pt x 451.6875pt>
+File: open.png Graphic file (type png)
+ <use open.png>
+Overfull \vbox (0.67358pt too high) detected at line 188
+ []
+
+[34
+
  <./open.png>]
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 198.
+
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+[35
+
+]
 \tf@nav=\write5
 \openout5 = `presentation.nav'.
 
@@ -971,18 +984,19 @@ Overfull \vbox (0.67358pt too high) detected at line 186
 
  (./presentation.aux) ) 
 Here is how much of TeX's memory you used:
- 12924 strings out of 495061
- 225449 string characters out of 1182622
- 302936 words of memory out of 3000000
- 15674 multiletter control sequences out of 15000+50000
- 22920 words of font info for 50 fonts, out of 3000000 for 9000
+ 12976 strings out of 495061
+ 226250 string characters out of 1182622
+ 302935 words of memory out of 3000000
+ 15713 multiletter control sequences out of 15000+50000
+ 23435 words of font info for 52 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  45i,13n,54p,338b,512s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</
-usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on presentation.pdf (31 pages, 257595 bytes).
+usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-te
+xlive/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on presentation.pdf (35 pages, 274502 bytes).
 PDF statistics:
- 318 PDF objects out of 1000 (max. 8388607)
- 67 named destinations out of 1000 (max. 500000)
+ 350 PDF objects out of 1000 (max. 8388607)
+ 75 named destinations out of 1000 (max. 500000)
  161 words of extra memory for PDF output out of 10000 (max. 10000000)
 
