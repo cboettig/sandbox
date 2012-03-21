@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-Various code fragments
-=======
-I am developing taxize_ as a package which will allow users to search over many websites for species names (scientific and common) and download up and downstream taxonomic hierarchical information. Functions soon will allow a whole vector of species names to be matched against websites, returning hierarchical taxonomic information. I hope to add in querying Phylomatic (http://www.phylodiversity.net/phylomatic/) in the future with automatic formatting for Phylomatic. 
->>>>>>> 00003b7fdf078c297e86ada0ecb74a2040444d3e
