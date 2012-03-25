@@ -3,12 +3,12 @@
 
 
 This gives a quick example about how we can add citations into a markdown file with the same ease that we can in latex.
-I first illustrate two different ways to get citation information.  In the first example we look up the metadata automatically given
+I illustrate two different ways to get citation information.  In the first example we look up the metadata automatically given
 the digital object identifier (doi) for the paper. 
 
 In the second example we will read in a bibliography in bibtex format using the bibtex package, which can then be expressed in markdown immediately.
 
-Then I create an inline citation function that can take either a list of doi's or bibentry topics and format them into inline citations, while also storing this information to generate the full bibliography later. 
+Next I create an inline citation function that can take either a list of doi's or bibentry topics and format them into inline citations, while also storing this information to generate the full bibliography later. 
 
 ### DOI Approach
 
@@ -22,7 +22,6 @@ require(rplos)
 
 
 
-An example of how to add citations in knitr.
 
 
 
