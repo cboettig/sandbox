@@ -45,10 +45,12 @@ Now this would be much more awesome if we could generate keys on write.bib and u
 The other thing we need is a way to print inline citations that would just use a given shortened format (e.g. author-year, or a number) and add the citation to a `works_cited` object, which we could then use to generate the full citation information at the end. 
 
 <!--begin.rcode
-empty <- list()
-class(empty) <- "bibentry"
-options(works_cited = empty)
 pcite <- function(x){
+  if(is.null(getOption("works_cited"))){
+    empty <- list()
+    class(empty) <- "bibentry"
+    options(works_cited = empty)
+  }
   sapply(x,function(x){
     if(is(x, "character"))
       entry <- crossref(x)
@@ -79,5 +81,8 @@ getOption("works_cited")
 end.rcode-->
 
 
+Like many others on this list, I finding myself more and more drawn to markdown rather then tex/Rnw as my standard format (not least of which is the ease of displaying the files on github, particularly now that we have automatic image uploading).  One thing I miss from latex is the citation commands. 
+
+I've taken a little whack at generating parenthetical citations
 
 
