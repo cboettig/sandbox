@@ -1,0 +1,58 @@
+# Parallelization on High-Performance Clusters in R
+
+## RMPI
+
+The direct Rmpi way:
+
+``` {r }
+    library(Rmpi)
+    mpi.spawn.Rslaves(nslaves=15)
+    slavefn <- function() { print(paste("Hello from", foldNumber)) }
+    mpi.bcast.cmd(foldNumber <- mpi.comm.rank())
+    mpi.bcast.Robj2slave(slavefn)
+    result <- mpi.remote.exec(slavefn())
+    print(result)
+    mpi.close.Rslaves()
+````
+
+## SNOW
+
+``` {r }
+    library(snow)
+    cluster <- makeCluster(16, type="MPI")
+    clusterEvalQ(cluster, library(utils)) # load a library
+    clusterExport(cluster, ls()) # export everything
+    out <- parSapply(cluster, 1:16, function(x) print(paste("snow hello from ", x)))
+    print(out)
+    stopCluster(cluster)
+````
+
+## SNOWFALL 
+(default "SOCK" type, for multicore machines).
+
+``` { r}
+    library(snowfall)
+    sfInit( parallel=TRUE, cpus=16)
+    sfExportAll()
+    sfLibrary(utils)
+    out <- sfSapply(1:16, function(x) print(paste("snow hello from ", x)))
+    print(out)
+    sfStop()
+````
+
+Snowfall using MPI mode, for distributing across nodes in a cluster (that use a shared hard disk but don't share memory).
+
+``` {r }
+    sfInit( parallel=TRUE, cpus=16, type="MPI" )
+    sfExportAll()
+    sfLibrary(utils)
+    out <- sfSapply(1:16, function(x) print(paste("snow hello from ", x)))
+    print(out)
+    sfStop()
+````
+
+snow's close command, which shuts down and quits from script.   
+
+``` {r }
+mpi.quit(save = "no")
+```
