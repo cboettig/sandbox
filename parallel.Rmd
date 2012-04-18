@@ -1,4 +1,5 @@
 # Parallelization on High-Performance Clusters in R
+`ro cache=FALSE or`
 
 ## RMPI
 
@@ -30,7 +31,7 @@ The direct Rmpi way:
 ## SNOWFALL 
 (default "SOCK" type, for multicore machines).
 
-``` { r}
+``` {r }
     library(snowfall)
     sfInit( parallel=TRUE, cpus=16)
     sfExportAll()
@@ -42,7 +43,8 @@ The direct Rmpi way:
 
 Snowfall using MPI mode, for distributing across nodes in a cluster (that use a shared hard disk but don't share memory).
 
-``` {r }
+``` {r eval=FALSE }
+    library(snowfall)
     sfInit( parallel=TRUE, cpus=16, type="MPI" )
     sfExportAll()
     sfLibrary(utils)
@@ -53,6 +55,6 @@ Snowfall using MPI mode, for distributing across nodes in a cluster (that use a 
 
 snow's close command, which shuts down and quits from script.   
 
-``` {r }
+``` {r eval=FALSE}
 mpi.quit(save = "no")
 ```
