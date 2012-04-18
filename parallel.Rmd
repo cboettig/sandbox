@@ -43,7 +43,7 @@ The direct Rmpi way:
 
 Snowfall using MPI mode, for distributing across nodes in a cluster (that use a shared hard disk but don't share memory).
 
-``` {r }
+``` {r eval=FALSE }
     library(snowfall)
     sfInit( parallel=TRUE, cpus=4, type="MPI" )
     sfExportAll()
@@ -52,6 +52,7 @@ Snowfall using MPI mode, for distributing across nodes in a cluster (that use a 
     print(out)
     sfStop()
 ````
+For reasons unknown to me, this last command does not work on farm, though it works fine on NERSC cluster.  
 
 snow's close command, which shuts down and quits from script.   
 

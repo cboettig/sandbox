@@ -9,20 +9,17 @@ The direct Rmpi way:
 
 ```r
 library(Rmpi)
-mpi.spawn.Rslaves(nslaves = 15)
+mpi.spawn.Rslaves(nslaves = 3)
 ```
 
 
 
 ```
-## 	15 slaves are spawned successfully. 0 failed.
-## master  (rank 0 , comm 1) of size 16 is running on: c0-9 
-## slave1  (rank 1 , comm 1) of size 16 is running on: c0-9 
-## slave2  (rank 2 , comm 1) of size 16 is running on: c0-9 
-## slave3  (rank 3 , comm 1) of size 16 is running on: c0-9 
-## ... ... ...
-## slave14 (rank 14, comm 1) of size 16 is running on: c0-9 
-## slave15 (rank 15, comm 1) of size 16 is running on: c0-9 
+## 	3 slaves are spawned successfully. 0 failed.
+## master (rank 0, comm 1) of size 4 is running on: c0-18 
+## slave1 (rank 1, comm 1) of size 4 is running on: c0-18 
+## slave2 (rank 2, comm 1) of size 4 is running on: c0-18 
+## slave3 (rank 3, comm 1) of size 4 is running on: c0-18 
 ```
 
 
@@ -49,42 +46,6 @@ print(result)
 ## $slave3
 ## [1] "Hello from 3"
 ## 
-## $slave4
-## [1] "Hello from 4"
-## 
-## $slave5
-## [1] "Hello from 5"
-## 
-## $slave6
-## [1] "Hello from 6"
-## 
-## $slave7
-## [1] "Hello from 7"
-## 
-## $slave8
-## [1] "Hello from 8"
-## 
-## $slave9
-## [1] "Hello from 9"
-## 
-## $slave10
-## [1] "Hello from 10"
-## 
-## $slave11
-## [1] "Hello from 11"
-## 
-## $slave12
-## [1] "Hello from 12"
-## 
-## $slave13
-## [1] "Hello from 13"
-## 
-## $slave14
-## [1] "Hello from 14"
-## 
-## $slave15
-## [1] "Hello from 15"
-## 
 ```
 
 
@@ -108,13 +69,13 @@ mpi.close.Rslaves()
 
 ```r
 library(snow)
-cluster <- makeCluster(16, type = "MPI")
+cluster <- makeCluster(4, type = "MPI")
 ```
 
 
 
 ```
-## 	16 slaves are spawned successfully. 0 failed.
+## 	4 slaves are spawned successfully. 0 failed.
 ```
 
 
@@ -142,61 +103,13 @@ clusterEvalQ(cluster, library(utils))  # load a library
 ## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
 ## [7] "utils"     "datasets"  "base"     
 ## 
-## [[5]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[6]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[7]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[8]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[9]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[10]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[11]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[12]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[13]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[14]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[15]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
-## [[16]]
-## [1] "snow"      "Rmpi"      "methods"   "stats"     "graphics"  "grDevices"
-## [7] "utils"     "datasets"  "base"     
-## 
 ```
 
 
 
 ```r
 clusterExport(cluster, ls())  # export everything
-out <- parSapply(cluster, 1:16, function(x) print(paste("snow hello from ", 
+out <- parSapply(cluster, 1:4, function(x) print(paste("snow hello from ", 
     x)))
 print(out)
 ```
@@ -204,12 +117,8 @@ print(out)
 
 
 ```
-##  [1] "snow hello from  1"  "snow hello from  2"  "snow hello from  3" 
-##  [4] "snow hello from  4"  "snow hello from  5"  "snow hello from  6" 
-##  [7] "snow hello from  7"  "snow hello from  8"  "snow hello from  9" 
-## [10] "snow hello from  10" "snow hello from  11" "snow hello from  12"
-## [13] "snow hello from  13" "snow hello from  14" "snow hello from  15"
-## [16] "snow hello from  16"
+## [1] "snow hello from  1" "snow hello from  2" "snow hello from  3"
+## [4] "snow hello from  4"
 ```
 
 
@@ -234,7 +143,7 @@ stopCluster(cluster)
 
 ```r
 library(snowfall)
-sfInit(parallel = TRUE, cpus = 16)
+sfInit(parallel = TRUE, cpus = 4)
 ```
 
 
@@ -247,7 +156,7 @@ sfInit(parallel = TRUE, cpus = 16)
 
 
 ```
-## snowfall 1.84 initialized (using snow 0.3-8): parallel execution on 16 CPUs.
+## snowfall 1.84 initialized (using snow 0.3-8): parallel execution on 4 CPUs.
 ## 
 ```
 
@@ -280,7 +189,7 @@ sfLibrary(utils)
 
 
 ```r
-out <- sfSapply(1:16, function(x) print(paste("snow hello from ", 
+out <- sfSapply(1:4, function(x) print(paste("snow hello from ", 
     x)))
 print(out)
 ```
@@ -288,12 +197,8 @@ print(out)
 
 
 ```
-##  [1] "snow hello from  1"  "snow hello from  2"  "snow hello from  3" 
-##  [4] "snow hello from  4"  "snow hello from  5"  "snow hello from  6" 
-##  [7] "snow hello from  7"  "snow hello from  8"  "snow hello from  9" 
-## [10] "snow hello from  10" "snow hello from  11" "snow hello from  12"
-## [13] "snow hello from  13" "snow hello from  14" "snow hello from  15"
-## [16] "snow hello from  16"
+## [1] "snow hello from  1" "snow hello from  2" "snow hello from  3"
+## [4] "snow hello from  4"
 ```
 
 
@@ -319,10 +224,10 @@ Snowfall using MPI mode, for distributing across nodes in a cluster (that use a 
 
 ```r
 library(snowfall)
-sfInit(parallel = TRUE, cpus = 16, type = "MPI")
+sfInit(parallel = TRUE, cpus = 4, type = "MPI")
 sfExportAll()
 sfLibrary(utils)
-out <- sfSapply(1:16, function(x) print(paste("snow hello from ", 
+out <- sfSapply(1:4, function(x) print(paste("snow hello from ", 
     x)))
 print(out)
 sfStop()
@@ -330,6 +235,7 @@ sfStop()
 
 
 
+For reasons unknown to me, this last command does not work on farm, though it works fine on NERSC cluster.  
 
 snow's close command, which shuts down and quits from script.   
 
