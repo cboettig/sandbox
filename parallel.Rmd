@@ -7,7 +7,7 @@ The direct Rmpi way:
 
 ``` {r }
     library(Rmpi)
-    mpi.spawn.Rslaves(nslaves=15)
+    mpi.spawn.Rslaves(nslaves=3)
     slavefn <- function() { print(paste("Hello from", foldNumber)) }
     mpi.bcast.cmd(foldNumber <- mpi.comm.rank())
     mpi.bcast.Robj2slave(slavefn)
@@ -20,10 +20,10 @@ The direct Rmpi way:
 
 ``` {r }
     library(snow)
-    cluster <- makeCluster(16, type="MPI")
+    cluster <- makeCluster(4, type="MPI")
     clusterEvalQ(cluster, library(utils)) # load a library
     clusterExport(cluster, ls()) # export everything
-    out <- parSapply(cluster, 1:16, function(x) print(paste("snow hello from ", x)))
+    out <- parSapply(cluster, 1:4, function(x) print(paste("snow hello from ", x)))
     print(out)
     stopCluster(cluster)
 ````
@@ -33,22 +33,22 @@ The direct Rmpi way:
 
 ``` {r }
     library(snowfall)
-    sfInit( parallel=TRUE, cpus=16)
+    sfInit( parallel=TRUE, cpus=4)
     sfExportAll()
     sfLibrary(utils)
-    out <- sfSapply(1:16, function(x) print(paste("snow hello from ", x)))
+    out <- sfSapply(1:4, function(x) print(paste("snow hello from ", x)))
     print(out)
     sfStop()
 ````
 
 Snowfall using MPI mode, for distributing across nodes in a cluster (that use a shared hard disk but don't share memory).
 
-``` {r eval=FALSE }
+``` {r }
     library(snowfall)
-    sfInit( parallel=TRUE, cpus=16, type="MPI" )
+    sfInit( parallel=TRUE, cpus=4, type="MPI" )
     sfExportAll()
     sfLibrary(utils)
-    out <- sfSapply(1:16, function(x) print(paste("snow hello from ", x)))
+    out <- sfSapply(1:4, function(x) print(paste("snow hello from ", x)))
     print(out)
     sfStop()
 ````
