@@ -1,0 +1,34 @@
+
+
+Knitr Basic Example
+===================
+
+How do I have a random number be reproducible?
+
+``` {r }
+set.seed(123)
+rnorm(10)
+````
+
+
+Make cool graphics we can share the code for.  We'll use some inline code to turn on `knitr's` upload function: `r opts_knit$set(upload = TRUE) `
+
+
+``` {r }
+library(ggplot2)
+qplot(hp, mpg, data=mtcars)+geom_smooth()
+ggpcp(mtcars) + geom_line()
+````
+
+
+
+## Libraries
+
+These libraries will load without printing any messages to the output. 
+
+``` {r message=FALSE}
+library(knitr)
+library(geiger)
+````
+
+Check out [knitr home page](https://knitr.github.com) for details. 
