@@ -11,7 +11,7 @@ rnorm(10)
 ````
 
 
-Make cool graphics we can share the code for.  We'll use some inline code to turn on `knitr's` upload function: `r opts_knit$set(upload = TRUE) `
+Make cool graphics we can share the code for.  We'll use some inline code to turn on `knitr's` upload function: `r opts_knit$set(upload.fun = imgur_upload) `
 
 
 ``` {r }
