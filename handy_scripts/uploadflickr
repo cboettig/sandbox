@@ -13,17 +13,17 @@ fmt = commandArgs(TRUE)
 a <- readLines(fmt)
 
 # Identify those lines with png images -- assumes they are in figures/
-lines <- grep("figures/.*\\.png", a)
+lines <- grep("figure/.*\\.png", a)
 
 # Extract the local path for those image files
-images <- gsub(".*(figures/.*\\.png).*", "\\1", a[lines])
+images <- gsub(".*(figure/.*\\.png).*", "\\1", a[lines])
 
 # upload those images to flickr, recording the urls
 urls <- sapply(images, socialR::flickr.url)
 
 # replace the path name with the url
 outlines <- sapply(1:length(urls), function(i)
- gsub("(^.*)(figures/.*\\.png)(.*$)", paste("\\1", urls[[i]], "\\3", sep=""), a[lines[i]]))
+ gsub("(^.*)(figure/.*\\.png)(.*$)", paste("\\1", urls[[i]], "\\3", sep=""), a[lines[i]]))
 
 # print output file
 a[lines] <- outlines
