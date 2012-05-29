@@ -31,6 +31,15 @@ The direct Rmpi way:
     mpi.close.Rslaves()
 ````
 
+# Benchmark
+
+``` {r }
+ A <- matrix(rnorm(1e6), 1e3)
+ system.time(A %*% A)
+````
+
+
+
 ## SNOW
 
 ``` {r }
@@ -40,6 +49,7 @@ The direct Rmpi way:
     clusterExport(cluster, ls()) # export everything
     out <- parSapply(cluster, 1:4, function(x) print(paste("snow hello from ", x)))
     print(out)
+		system.time(parMM(cluster, A, A))
     stopCluster(cluster)
 ````
 
@@ -52,7 +62,8 @@ The direct Rmpi way:
     sfExportAll()
     sfLibrary(utils)
     out <- sfSapply(1:4, function(x) print(paste("snow hello from ", x)))
-    print(out)
+ 	  print(out)
+ 		system.time(sfMM(A, A))
     sfStop()
 ````
 
@@ -65,7 +76,8 @@ Snowfall using MPI mode, for distributing across nodes in a cluster (that use a 
     sfLibrary(utils)
     out <- sfSapply(1:4, function(x) print(paste("snow hello from ", x)))
     print(out)
-    sfStop()
+ 		system.time(sfMM(A, A))
+  	sfStop()
 ````
 For reasons unknown to me, this last command does not work on farm, though it works fine on NERSC cluster.  
 
