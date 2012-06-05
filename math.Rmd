@@ -1,15 +1,48 @@
 
+
+Add mathjax script right into the markdown file like so:
+
+```html
+<!-- Equations using MathJax -->
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });       </script>
+```
+
+
 <!-- Equations using MathJax -->
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });       </script>
 
+
+Add knitr block into the markdown file.  
 
 ```{r}
 1 + 1
 ```
 
 
-<div> \[ J_\alpha(x) = \sum\limits_{m=0}^\infty \frac{(-1)^m}{m! \, \Gamma(m + \alpha + 1)}{\left({\frac{x}{2}}\right)}^{2 m + \alpha} \] </div>
+Display equations by delimiting with `<div>$$`
 
-<div> \[ J_\alpha(x) = \sum\limits_{m=0}^\infty \frac{(-1)^m}{m! \, \Gamma(m + \alpha + 1)}{\left({\frac{x}{2}}\right)}^{2 m + \alpha} \] </div>
+<div>$$  J_\alpha(x) = \sum\limits_{m=0}^\infty \frac{(-1)^m}{m! \, \Gamma(m + \alpha + 1)}{\left({\frac{x}{2}}\right)}^{2 m + \alpha} $$</div>
+
+And inline equations with `<span>$`, like <span>$e = mc^2$</span>
+
+
+### Now the following works:
+
+* Pandoc generated latex: `pandoc -s math.md -o math.tex`.  
+* The Markdown file will be converted to valid html by almost any markdown converter, which ignores the div/span elements.  The mathjax script added in the top will cause these to display correctly.  (Note this works for the inline equation too, even though [mathjax says it shouldn't](http://www.mathjax.org/docs/2.0/start.html#tex-and-latex-input)?)
+* To get pandoc to run in this mode without touching the math syntax, use `--strict` option: `pandoc -s --strict math.md -o math.html`
+* Pandoc can handle the mathjax rendering itself, since without `strict` enabled, it reads inside the div/span elements and finds math syntax it recognizes. as does `pandoc -s --mathjax math.md -o math3.html`.  Likewise for mathml: `pandoc -s --mathml -o math4.html`. 
+* Simple html works too, though has no rendering engine: `pandoc -s math.md -o math2.html` so the result is not displayed properly. 
+
+
+### See results
+* [math.md](https://github.com/cboettig/sandbox/blob/master/math.md)
+* [math.tex](https://github.com/cboettig/sandbox/blob/master/math.tex)
+* Pandoc strict (or most markdown intepreters): [math.html](http://cboettig.github.com/sandbox/math3.html)
+* Pandoc mathjax: [math3.html](http://cboettig.github.com/sandbox/math3.html)
+* mathml: [math4.html](http://cboettig.github.com/sandbox/math4.html)
+* Pandoc's plain html: [math2.html](http://cboettig.github.com/sandbox/math2.html)
+* Giving jekyll a copy of math.md, it creates [math-jekyll.html](http://cboettig.github.com/sandbox/math-jekyll.html)
 
