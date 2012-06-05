@@ -24,7 +24,79 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
   </style>
-  <script src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+  <script type="text/javascript">/*<![CDATA[*/
+  /* 
+  March 19, 2004 MathHTML (c) Peter Jipsen http://www.chapman.edu/~jipsen
+  Released under the GNU General Public License version 2 or later.
+  See the GNU General Public License (at http://www.gnu.org/copyleft/gpl.html)
+  for more details.
+  */
+  
+  function convertMath(node) {// for Gecko
+    if (node.nodeType==1) {
+      var newnode = 
+        document.createElementNS("http://www.w3.org/1998/Math/MathML",
+          node.nodeName.toLowerCase());
+      for(var i=0; i < node.attributes.length; i++)
+        newnode.setAttribute(node.attributes[i].nodeName,
+          node.attributes[i].nodeValue);
+      for (var i=0; i<node.childNodes.length; i++) {
+        var st = node.childNodes[i].nodeValue;
+        if (st==null || st.slice(0,1)!=" " && st.slice(0,1)!="\n") 
+          newnode.appendChild(convertMath(node.childNodes[i]));
+      }
+      return newnode;
+    }
+    else return node;
+  }
+  
+  function convert() {
+    var mmlnode = document.getElementsByTagName("math");
+    var st,str,node,newnode;
+    for (var i=0; i<mmlnode.length; i++)
+      if (document.createElementNS!=null)
+        mmlnode[i].parentNode.replaceChild(convertMath(mmlnode[i]),mmlnode[i]);
+      else { // convert for IE
+        str = "";
+        node = mmlnode[i];
+        while (node.nodeName!="/MATH") {
+          st = node.nodeName.toLowerCase();
+          if (st=="#text") str += node.nodeValue;
+          else {
+            str += (st.slice(0,1)=="/" ? "</m:"+st.slice(1) : "<m:"+st);
+            if (st.slice(0,1)!="/") 
+               for(var j=0; j < node.attributes.length; j++)
+                 if (node.attributes[j].nodeValue!="italic" &&
+                   node.attributes[j].nodeValue!="" &&
+                   node.attributes[j].nodeValue!="inherit" &&
+                   node.attributes[j].nodeValue!=undefined)
+                   str += " "+node.attributes[j].nodeName+"="+
+                       "\""+node.attributes[j].nodeValue+"\"";
+            str += ">";
+          }
+          node = node.nextSibling;
+          node.parentNode.removeChild(node.previousSibling);
+        }
+        str += "</m:math>";
+        newnode = document.createElement("span");
+        node.parentNode.replaceChild(newnode,node);
+        newnode.innerHTML = str;
+      }
+  }
+  
+  if (document.createElementNS==null) {
+    document.write("<object id=\"mathplayer\"\
+    classid=\"clsid:32F66A20-7614-11D4-BD11-00104BD3F987\"></object>");
+    document.write("<?import namespace=\"m\" implementation=\"#mathplayer\"?>");
+  }
+  if(typeof window.addEventListener != 'undefined'){
+    window.addEventListener('load', convert, false);
+  }
+  if(typeof window.attachEvent != 'undefined') {
+    window.attachEvent('onload', convert);
+  }
+  /*]]>*/
+  </script>
 </head>
 <body>
 <p>Add mathjax script right into the markdown file like so:</p>
@@ -41,10 +113,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <pre><code>## [1] 2</code></pre>
 <p>Display equations by delimiting with <code>&lt;div&gt;$$</code></p>
 <div>
-\[  J_\alpha(x) = \sum\limits_{m=0}^\infty \frac{(-1)^m}{m! \, \Gamma(m + \alpha + 1)}{\left({\frac{x}{2}}\right)}^{2 m + \alpha} \]
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>J</mi><mi>α</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>m</mi><mo>=</mo><mn>0</mn></mrow><mo>∞</mo></munderover><mfrac><mrow><mo stretchy="false">(</mo><mo>−</mo><mn>1</mn><msup><mo stretchy="false">)</mo><mi>m</mi></msup></mrow><mrow><mi>m</mi><mo>!</mo><mspace width="0.167em"></mspace><mo>Γ</mo><mo stretchy="false">(</mo><mi>m</mi><mo>+</mo><mi>α</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo></mrow></mfrac><msup><mrow><mo stretchy="true">(</mo><mfrac><mi>x</mi><mn>2</mn></mfrac><mo stretchy="true">)</mo></mrow><mrow><mn>2</mn><mi>m</mi><mo>+</mo><mi>α</mi></mrow></msup></mrow></math>
 </div>
 
-<p>And inline equations with <code>&lt;span&gt;$</code>, like <span>\(e = mc^2\)</span></p>
+<p>And inline equations with <code>&lt;span&gt;$</code>, like <span><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>e</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></mrow></math></span></p>
 <h3 id="now-the-following-works">Now the following works:</h3>
 <ul>
 <li>Pandoc generated latex: <code>pandoc -s math.md -o math.tex</code>.<br /></li>

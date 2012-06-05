@@ -26,7 +26,10 @@ code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
-<p>Add mathjax script right into the markdown file.</p>
+<p>Add mathjax script right into the markdown file like so:</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Equations using MathJax --&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> src=</span><span class="st">&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+<span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/x-mathjax-config&quot;</span><span class="kw">&gt;</span> <span class="kw">MathJax.Hub</span>.<span class="fu">Config</span>({ <span class="dt">TeX</span>: { <span class="dt">equationNumbers</span>: {<span class="dt">autoNumber</span>: <span class="st">&quot;all&quot;</span>} } });       <span class="kw">&lt;/script&gt;</span></code></pre>
 <!-- Equations using MathJax -->
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });       </script>
@@ -41,12 +44,23 @@ code > span.er { color: #ff0000; font-weight: bold; }
 </div>
 
 <p>And inline equations with <code>&lt;span&gt;$</code>, like <span><span class="math"><em>e</em> = <em>m</em><em>c</em><sup>2</sup></span></span></p>
-<p>Now the following works:</p>
+<h3 id="now-the-following-works">Now the following works:</h3>
 <ul>
-<li>Pandoc generated latex: <code>pandoc math.md -o math.tex</code></li>
-<li>The Markdown file will be converted to valid html by almost any markdown converter, which ignores the div/span elements. The mathjax script added in the top will cause these to display correctly. (Except for the inline equation??)</li>
-<li>To get pandoc to run in this mode without touching the math syntax, use <code>--strict</code> option: <code>pandoc --strict math.md -o math.html</code></li>
-<li>Pandoc can handle the mathjax rendering itself, since without <code>strict</code> enabled, it reads inside the div/span elements and finds math syntax it recognizes. <code>pandoc math.md -o math2.html</code> works for simple html, as does <code>pandoc -s --mathjax math.md -o math3.html</code> or <code>pandoc -s --mathml -o math4.html</code>.</li>
+<li>Pandoc generated latex: <code>pandoc -s math.md -o math.tex</code>.<br /></li>
+<li>The Markdown file will be converted to valid html by almost any markdown converter, which ignores the div/span elements. The mathjax script added in the top will cause these to display correctly. (Note this works for the inline equation too, even though <a href="http://www.mathjax.org/docs/2.0/start.html#tex-and-latex-input">mathjax says it shouldn't</a>?)</li>
+<li>To get pandoc to run in this mode without touching the math syntax, use <code>--strict</code> option: <code>pandoc -s --strict math.md -o math.html</code></li>
+<li>Pandoc can handle the mathjax rendering itself, since without <code>strict</code> enabled, it reads inside the div/span elements and finds math syntax it recognizes. as does <code>pandoc -s --mathjax math.md -o math3.html</code>. Likewise for mathml: <code>pandoc -s --mathml -o math4.html</code>.</li>
+<li>Simple html works too, though has no rendering engine: <code>pandoc -s math.md -o math2.html</code> so the result is not displayed properly.</li>
+</ul>
+<h3 id="see-results">See results</h3>
+<ul>
+<li><a href="https://github.com/cboettig/sandbox/blob/master/math.md">math.md</a></li>
+<li><a href="https://github.com/cboettig/sandbox/blob/master/math.tex">math.tex</a></li>
+<li>Pandoc strict (or most markdown intepreters): <a href="http://cboettig.github.com/sandbox/math3.html">math.html</a></li>
+<li>Pandoc mathjax: <a href="http://cboettig.github.com/sandbox/math3.html">math3.html</a></li>
+<li>mathml: <a href="http://cboettig.github.com/sandbox/math4.html">math4.html</a></li>
+<li>Pandoc's plain html: <a href="http://cboettig.github.com/sandbox/math2.html">math2.html</a></li>
+<li>Giving jekyll a copy of math.md, it creates <a href="http://cboettig.github.com/sandbox/math-jekyll.html">math-jekyll.html</a></li>
 </ul>
 </body>
 </html>
