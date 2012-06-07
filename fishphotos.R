@@ -2,8 +2,6 @@ require(httr)
 require(XML)
 require(RCurl)
 
-family <- "Labridae"
-
 
 ## Download all images
 get_fish_pages <- function(family){
@@ -13,40 +11,94 @@ get_fish_pages <- function(family){
   node <- getNodeSet(b, "//@href")
 }
 
+
+download_images <- function(node, base ="http://pbs.bishopmuseum.org/images/JER/", dest="./"){
+  sapply(4:length(node), function(i){
+    id <- as.character(gsub(".*ID=-*(\\d.+)", "\\1", node[[i]]))
+    download.file(paste(base, "large/", id, ".jpg", sep=""), paste(dest, id, ".jpg", sep=""))
+  })
+}
+
+
+get_metadata <- function(node, base ="http://pbs.bishopmuseum.org/images/JER/"){
+  handle <- getCurlHandle()
+  dat <-  sapply(4:length(node), function(i){
+    id <- as.character(gsub(".*ID=-*(\\d.+)", "\\1", node[[i]]))
+    img <- paste(base, node[[i]], sep="")
+    page <- getURLContent(img, curl=handle)
+    p <- strsplit(page[[1]], "\n")[[1]]
+    p <- gsub("\t", "", p)
+    p <- gsub("\r", "", p)
+    j <- grep("Date:", p)
+    date <- gsub(".*</font> (\\w.*)</font>.*", "\\1", p[j])
+    j <- grep("Locality:", p)
+    locality <- gsub(".*</font> (\\w.*)</font>.*", "\\1", p[j])
+    j <- grep("Original ID:", p)
+    species <- gsub(".*<i>(\\w.* \\w.*)</i>.*", "\\1", p[j])
+    j <- grep("Size", p)
+    TL <- as.numeric( gsub(".*font>.* (\\d.*) TL.*", "\\1", p[j]))
+    SL <- as.numeric( gsub(".*font> (\\d.*) SL;.*", "\\1", p[j]))
+    list(species=species, locality=locality, TL=TL, SL=SL, date=date, id=id)
+  })
+  as.data.frame(t(dat))
+}
+
 ## USE:
 ## pages <- get_fish_pages("Labridae")
 ## download_images(pages)
 ## length_data <- get_lengths(pages)
 
-download_images <- function(node){
-  sapply(4:length(node), function(i){
-    id <- as.character(gsub(".*ID=(\\d.+)", "\\1", node[[i]]))
-    download.file(paste(base, "large/", id, ".jpg", sep=""), paste(id, ".jpg", sep=""))
-  })
+family <- "Labridae"
+pages <- get_fish_pages(family) 
+metadata <- get_metadata(pages)
+head(metadata)
+write.csv(metadata, paste(family, ".csv"))
+#download_images(pages)
+
+
+# Add lat-long information based on place names:
+# http://stackoverflow.com/questions/3257441/geocoding-in-r-with-google-maps
+
+
+library(RCurl)
+library(RJSONIO)
+
+construct.geocode.url <- function(address, return.call = "json", sensor = "false") {
+  root <- "http://maps.google.com/maps/api/geocode/"
+  u <- paste(root, return.call, "?address=", address, "&sensor=", sensor, sep = "")
+  return(URLencode(u))
+}
+
+gGeoCode <- function(address,verbose=FALSE) {
+  if(verbose) cat(address,"\n")
+  u <- construct.geocode.url(address)
+  doc <- getURL(u)
+  x <- fromJSON(doc,simplify = FALSE)
+  if(x$status=="OK") {
+    lat <- x$results[[1]]$geometry$location$lat
+    lng <- x$results[[1]]$geometry$location$lng
+    return(c(lat, lng))
+  } else {
+    return(c(NA,NA))
+  }
 }
 
 
-get_lengths <- function(node){
-  handle <- getCurlHandle()
-  sapply(4:length(node), function(i){
-    img <- paste(base, node[[i]], sep="")
-    page <- getURLContent(img, curl=handle)
-    p <- strsplit(page[[1]], "\n")[[1]]
-    p <- gsub("\t", "", p)
-    p <- gsub("\r", "", p)
-    j <- grep("Size", p)
-    lengths <- strsplit( gsub(".*font> (\\d.*) SL; (\\d.*) TL.*", "\\1,\\2", p[j]), ",")
-  })
-}
+#latlong <- sapply(metadata$locality, gGeoCode)
 
 
-parse_image_pages <- function(node){
-  pages <- sapply(4:length(node), function(i){
-    img <- paste(base, node[[i]], sep="")
-    page <- getURLContent(img, curl=handle)
-    p <- strsplit(page[[1]], "\n")[[1]]
-    p <- gsub("\t", "", p)
-    p <- gsub("\r", "", p)
-    p <- htmlParse(p)
-  }) 
-}
+## Format dates as dates 
+#dates <- sapply(metadata$date, as.Date, "%d %B %Y")
+
+
+
+
+
+
+
+
+
+
+
+
+
