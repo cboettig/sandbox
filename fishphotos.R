@@ -69,11 +69,11 @@ get_metadata <- function(node, base ="http://pbs.bishopmuseum.org/images/JER/", 
     TL <- as.numeric( gsub(".*font>.* (\\d.*) TL.*", "\\1", p[j]))
     SL <- as.numeric( gsub(".*font> (\\d.*) SL;.*", "\\1", p[j]))
     if(geocode){
-      latlong <- sapply(metadata$locality, gGeoCode)
+      latlong <- gGeoCode(locality)
       lat = latlong[1]
       long = latlong[2]
     }
-    Rdate <- sapply(metadata$date, as.Date, "%d %B %Y")
+    Rdate <- as.Date(date, "%d %B %Y")
     list(species=species, locality=locality, TL=TL, SL=SL, date=date, latitude=lat, longitude=long, Rdate = Rdate, id=id)
   })
   as.data.frame(t(dat))
@@ -83,7 +83,8 @@ get_metadata <- function(node, base ="http://pbs.bishopmuseum.org/images/JER/", 
 family <- "Labridae"
 pages <- get_fish_pages(family) 
 metadata <- get_metadata(pages)
-write.csv(metadata, paste(family, ".csv"))
+out <- data.frame(lapply(metadata, function(x) as.character(x)))
+write.csv(out, paste(family, ".csv", sep=""))
 download_images(pages)
 
 
