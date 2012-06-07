@@ -42,8 +42,8 @@ get_fish_pages <- function(family){
 
 download_images <- function(node, base ="http://pbs.bishopmuseum.org/images/JER/", dest="./"){
   sapply(4:length(node), function(i){
-    id <- as.character(gsub(".*ID=-*(\\d.+)", "\\1", node[[i]]))
-    download.file(paste(base, "large/", id, ".jpg", sep=""), paste(dest, id, ".jpg", sep=""))
+    id <- as.character(gsub(".*ID=(-*\\d.+)", "\\1", node[[i]]))
+    try(download.file(paste(base, "large/", id, ".jpg", sep=""), paste(dest, id, ".jpg", sep="")))
   })
 }
 
@@ -53,7 +53,7 @@ get_metadata <- function(node, base ="http://pbs.bishopmuseum.org/images/JER/", 
   dat <-  sapply(4:length(node), function(i){
     lat = NA
     long = NA
-    id <- as.character(gsub(".*ID=-*(\\d.+)", "\\1", node[[i]]))
+    id <- as.character(gsub(".*ID=(-*\\d.+)", "\\1", node[[i]]))
     img <- paste(base, node[[i]], sep="")
     page <- getURLContent(img, curl=handle)
     p <- strsplit(page[[1]], "\n")[[1]]
