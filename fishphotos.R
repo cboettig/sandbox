@@ -80,11 +80,16 @@ get_metadata <- function(node, base ="http://pbs.bishopmuseum.org/images/JER/", 
 }
 
 
-family <- "Labridae"
-pages <- get_fish_pages(family) 
-metadata <- get_metadata(pages)
-out <- data.frame(lapply(metadata, function(x) as.character(x)))
-write.csv(out, paste(family, ".csv", sep=""))
-download_images(pages)
+require(rfishbase)
+data(fishbase)
+families <- unique(fish_names(fish.data, "Family"))
+for(family in families){
+  pages <- get_fish_pages(family) 
+  metadata <- get_metadata(pages)
+  out <- data.frame(lapply(metadata, function(x) as.character(x)))
+  write.csv(out, paste(family, ".csv", sep=""))
+  download_images(pages)
+}
 
+## Consider plotting on a map? http://cran.r-project.org/web/packages/RgoogleMaps/vignettes/RgoogleMaps-intro.pdf
 
