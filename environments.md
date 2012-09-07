@@ -20,13 +20,13 @@ key = Sys.getenv("FlickrKey")
 ```
 
 
-Note that it seems the object needs to be a string:
+Note that it seems the object needs to be a string (otherwise is coaxed into one):
 
 
 ```r
 f = function(x) 2 * x
 b = 5
-Sys.setenv(test_function = f, a = b, m = 5)
+Sys.setenv(test_function = f, a = b)
 Sys.getenv("test_function")
 ```
 
@@ -39,14 +39,31 @@ class(g)
 ```
 
 ```
-## [1] "character"
+## Error: object 'g' not found
 ```
 
 ```r
-Sys.getenv("a", "m")
+Sys.getenv("a")
 ```
 
 ```
 ## [1] "5"
 ```
+
+
+A much better way to do this:
+
+
+```r
+myenv <- new.env(hash = TRUE)
+assign("test_function", f, envir = myenv)
+get("test_function", envir = myenv)
+```
+
+```
+## function(x) 2 * x
+```
+
+
+Create environment for the package by adding scripts (rather than functions) to a `zzz.R` file in R.  Will be run when the package is loaded.  
 
