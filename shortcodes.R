@@ -1,9 +1,9 @@
+require(Rflickr)
 
 #rssinpage, cetsEmbedRSS, flickr-gallery
 
 # Get a list of all files
 files <- system("ls *.markdown", intern=T)
-#files <- system("ls 2012-*.markdown", intern=T)
 
 
 #fix_citations(files)
@@ -68,21 +68,44 @@ lapply(files, function(file){
 
 # Update flickr tags
 fix_flickr <- function(files){
-lapply(files, function(file){
-  content <- readLines(file)
-  content <- gsub("\\[flickr.*?\\]http://flickr.com\\/photos\\/46456847@N08\\/(\\d+)?\\[\\/flickr\\]", "{% flickr_photo \\1 %}", content)
-  content <- gsub("\\[flickr.*?\\](\\d+)?\\[\\/flickr\\]", "{% flickr_photo \\1 %}", content)
-  writeLines(content, file)
-})
+  require(Rflickr)
+
+  auth=getOption("flickr_tok") 
+  api_key=getOption("flickr_api_key") 
+  secret=getOption("flickr_secret")
+
+
+  flickr_url <- function(id){
+    sizes_url <- flickr.photos.getSizes(secret=secret, auth_token=auth,
+                                        api_key=api_key, photo_id=id)
+    n <- length(sizes_url) # get original size
+    orig_size_url <- sizes_url[[n-1]][[4]]
+    paste("![](", orig_size_url, ")\n" )
+  }
+  
+  lapply(files, function(file){
+    content <- readLines(file)
+    content <- gsubfn("\\[flickr.*?\\]http://flickr.com\\/photos\\/46456847@N08\\/(\\d+)?\\[\\/flickr\\]", flickr_url, content)
+    content <- gsubfn("\\[flickr.*?\\](\\d+)?\\[\\/flickr\\]", flickr_url, content)
+    writeLines(content, file)
+  })
 }
 
+
+require(gsubfn)
 # Update equation tags
 fix_equations <- function(files){
   lapply(files, function(file){
     content <- readLines(file)
-    content <- gsub("\\[latex\\]", "<div>\\\\begin{equation}", content)
-    content <- gsub("\\[\\/latex\\]", "\\\\end{equation}<\\/div>", content)
-    content <- gsub("\\$latex (.*) \\$", "<div>\\\\begin{equation}\\1\\\\end{equation}<\\/div>", content)
+    display <- "$$\\2$$"
+    inline <- "$\\2$"
+    content <- gsubfn("^(\\\\\\[)$", "$$", content)
+    content <- gsubfn("^(\\\\\\])$", "$$", content)
+
+    content <- gsubfn("(\\\\\\[)(.+)??(\\\\\\])", display, content)
+    content <- gsubfn("(\\\\\\( ?)(.+)??( ?\\\\\\))", inline, content)
+    content <- gsubfn("(\\[latex\\])(.+)??(\\[\\/latex\\])", display, content)
+    content <- gsubfn("(\\$latex)(.+)??(\\$)", inline, content)
     writeLines(content, file)
   })
 }
@@ -128,6 +151,33 @@ lapply(files, function(file){
          system(paste("rm", file)) # remove the original file
        }
 })
+}
+
+
+
+fix_iframes <- function(files){
+  lapply(files, function(file){
+       content <- readLines(file)
+       pattern <- "[iframe (http://+? ) (\\d*) (\\d*)]"
+       content <- gsubfn(pattern, "<iframe src=\"\\1\" width=\\2 height=\\3>", content)
+       writeLines(content, file)
+  })
+}
+
+
+
+migrate_disqus <- function(files){
+  sapply(files, function(file){
+         file <- paste("originals", file, sep="/")
+         content <- readLines(file)
+         lines <- grep("wordpress_id: (\\d+)", content)
+         orig_url <- gsub(".*wordpress_id: (\\d+).*", "http://carlboettiger.info/wordpress/archives/\\1", content[lines])
+         new_url <- gsub("\\.markdown$", "", file)
+         new_url <- gsubfn("(\\d+)-", "\\1/", new_url)
+         new_url <- paste("http://carlboettiger.info/", new_url, ".html", sep="") 
+         paste(orig_url, new_url, sep=",")
+  
+  })
 }
 
 
