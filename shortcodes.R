@@ -85,6 +85,7 @@ fix_flickr <- function(files){
   
   lapply(files, function(file){
     content <- readLines(file)
+    content <- gsubfn("\\[flickr.*?\\]http://www.flickr.com\\/photos\\/cboettig\\/(\\d+)?\\[\\/flickr\\]", flickr_url, content)
     content <- gsubfn("\\[flickr.*?\\]http://flickr.com\\/photos\\/46456847@N08\\/(\\d+)?\\[\\/flickr\\]", flickr_url, content)
     content <- gsubfn("\\[flickr.*?\\](\\d+)?\\[\\/flickr\\]", flickr_url, content)
     writeLines(content, file)
