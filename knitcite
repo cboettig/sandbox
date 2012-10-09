@@ -1,0 +1,19 @@
+#!/usr/bin/env Rscript
+local({
+    p = commandArgs(TRUE)
+    if (length(p) == 0L || '--help' %in% p) {
+        message('usage:
+    knit input [output] [--pdf]
+    knit --help to print help messages')
+        q()
+    }
+    library(utils)
+    library(methods)
+    library(knitr)
+    library(knitcitations)
+    if (!file.exists(p[1]))
+        stop("file '", p[1], "' does not exist!")
+    knit(p[1], if (length(p) < 2L) NULL else p[2])
+})
+
+

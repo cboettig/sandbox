@@ -1,0 +1,8 @@
+#!/bin/bash
+# Wrapper for the knitscite script
+# can be called on a visual block as :'<,'>!knitscript
+
+tmpname="/tmp/$(basename "$0").tmp$RANDOM"
+trap "rm -f '"$tmpname"'" ERR INT EXIT
+knitcite <(cat) "$tmpname"
+cat "$tmpname"
