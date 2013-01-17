@@ -7,82 +7,75 @@ I will base the wordpress format on the github-flavored markdown format.  I chan
 
 
 
-
-[code lang='r']
+```r
 render_gfm()
+options(width = 30)
 opts_knit$set(upload = TRUE)
-knit_hooks$set(output = function(x, 
-    options) paste("[code]\n", 
-    x, "[/code]\n", sep = ""), 
-    source = function(x, 
-        options) paste("[code lang='r']\n", 
-        x, "[/code]\n", 
-        sep = ""), plot = hook_plot_html)
-[/code]
-
+knit_hooks$set(output = function(x, options) paste("[code]\n", x, 
+    "[/code]\n", sep = ""), source = function(x, options) paste("[code lang='r']\n", 
+    x, "[/code]\n", sep = ""), plot = hook_plot_html)
+```
 
 
 Now we write some code chunks in this markdown file:
 
-[code lang='r']
-## a simple
-#   calculator
+
+```r
+## a simple calculator
 1 + 1
-[/code]
-[code]
+```
+
+```
 ## [1] 2
-[/code]
-[code lang='r']
-## boring random
-#   numbers
+```
+
+```r
+## boring random numbers
 set.seed(123)
 rnorm(5)
-[/code]
-[code]
-## [1] -0.56048 -0.23018  1.55871
-## [4]  0.07051  0.12929
-[/code]
+```
 
+```
+## [1] -0.56048 -0.23018  1.55871  0.07051  0.12929
+```
 
 
 We can also produce plots which are uploaded to imgur.com:
 
-[code lang='r']
-library(ggplot2)
-qplot(hp, mpg, 
-    data = mtcars) + geom_smooth()
-[/code]
-<img src="http://i.imgur.com/YfwwX.png" class="plot" />
-[code lang='r']
-ggpcp(mtcars) + 
-    geom_line()
-[/code]
-<img src="http://i.imgur.com/udkrA.png" class="plot" />
 
+```r
+library(ggplot2)
+qplot(hp, mpg, data = mtcars) + geom_smooth()
+```
+
+![plot of chunk md-cars](ex-out-md-cars1.png) 
+
+```r
+ggpcp(mtcars) + geom_line()
+```
+
+![plot of chunk md-cars](ex-out-md-cars2.png) 
 
 
 
 We can then post the result using RWordPress:
 
-[code lang='r']
-require(RWordPress)
-text = paste(readLines("wordpress.md"), 
-    collapse = "\n")
-title = "Using knitr and RWordPress to publish results directly from R"
-newPost(list(description = text, 
-    title = title), publish = FALSE)
-[/code]
 
+```r
+require(RWordPress)
+text = paste(readLines("wordpress.md"), collapse = "\n")
+title = "Using knitr and RWordPress to publish results directly from R"
+newPost(list(description = text, title = title), publish = FALSE)
+```
 
 
 Above we specify publish = FALSE which will make the post upload as a draft where we can preview it.  To publish directly we could omit that command.  Giving a title is intuitive. Note that we have to read the text in and substitue newline characters for line-breaks.   
 
 Note that this requires setting the login options securely in .Rprofile, for example:
-[code lang='r']
-options(WordpressLogin = c(userid = "password"), 
-    WordpressURL = "http://www.yourdomain.com/xmlrpc.php")
-[/code]
 
+```r
+options(WordpressLogin = c(userid = "password"), WordpressURL = "http://www.yourdomain.com/xmlrpc.php")
+```
 
 
 
