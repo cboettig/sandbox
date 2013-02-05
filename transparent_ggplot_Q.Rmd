@@ -1,0 +1,23 @@
+
+#
+
+```{r include=FALSE}
+opts_knit$set(upload.fun = socialR::notebook.url)
+opts_chunk$set(dev.args=list(bg="transparent"))
+```
+
+```{r}
+require(ggplot2)
+theme_transparent <- theme_set(theme_bw(14))
+theme_transparent <- theme_update(
+        panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
+        legend.title=element_blank(), 
+        panel.background = element_rect(fill = "transparent",colour = NA), 
+        plot.background = element_rect(fill = "transparent",colour = NA))
+```
+
+is this transparent?
+ 
+```{r}
+qplot(hp, mpg, data = mtcars) + geom_smooth()
+```
