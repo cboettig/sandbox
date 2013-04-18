@@ -1,4 +1,5 @@
-The span element is <span class="some-class" title="some _title_">usually</span> parsed without parsing the text in it's elements.  
+The span element is usually parsed without parsing the text in its elements.  
+<span class="some-class" title="some _title_">_span text_</span>
 
-<span class="some-class" data-html="true" title="some <em>title</em>">But not if those elements contain HTML.    </span>
+<span class="some-class" data-html="true" title="some <em>title</em>">But _not_ if those elements contain HTML. </span>
 
