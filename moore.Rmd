@@ -42,6 +42,26 @@ wrapped_neighborhood[,2] <- (neighborhood[,2] - 1) %% dim(M)[2] + 1
 
 Clearly this can be extended to $r > 1$. 
 
+```
+r_max <- 3
+rows <- numeric(0)
+cols <- numeric(0)
 
-neighborhood
+for(r in 1:r_max){
+ rows <- c(rows, c(i-r, i,   i+r, i-r, i,  i+r,  i-r, i,   i+r))
+ cols <- c(cols, c(j-r, j-r, j-r, j,   j,  j,    j+r, j+r, j+r))
+} 
+
+neighborhood <- cbind(rows, cols)
+```
+
+Once again we have to deal with boundary cases, e.g. wrapping as before:  
+
+```{r}
+wrapped_neighborhood <- neighborhood
+wrapped_neighborhood[,1] <- (neighborhood[,1] - 1) %% dim(M)[1] + 1
+wrapped_neighborhood[,2] <- (neighborhood[,2] - 1) %% dim(M)[2] + 1
+
+
+
 
