@@ -53,6 +53,7 @@ for(r in 1:r_max){
 } 
 
 neighborhood <- cbind(rows, cols)
+neighborhood 
 ```
 
 Once again we have to deal with boundary cases, e.g. wrapping as before:  
@@ -61,6 +62,7 @@ Once again we have to deal with boundary cases, e.g. wrapping as before:
 wrapped_neighborhood <- neighborhood
 wrapped_neighborhood[,1] <- (neighborhood[,1] - 1) %% dim(M)[1] + 1
 wrapped_neighborhood[,2] <- (neighborhood[,2] - 1) %% dim(M)[2] + 1
+wrapped_neighborhood
 ```
 
 
@@ -68,28 +70,24 @@ wrapped_neighborhood[,2] <- (neighborhood[,2] - 1) %% dim(M)[2] + 1
 What if we wanted to wrap just the neighborhood if we hit the boundary?
 
 ```{r}
-r_max <- 3
-rows <- numeric(0)
-cols <- numeric(0)
-
-wrap <- function(i, r, n){
- if(i-r < 0)
-   out <- i+r+1
- if(i+r > n)
-   out <- i-r-1
- out
+wrap <- function(k, r, n){
+  if(k < 1)
+    k <- k + r - (k-1)
+  if(k > n)
+    k <- k - r - (k-n)
+ k
 }
+```
 
-for(r in 1:r_max){
- rows <- c(rows, c(i-r, i,   i+r, i-r, i,  i+r,  i-r, i,   i+r))
- cols <- c(cols, c(j-r, j-r, j-r, j,   j,  j,    j+r, j+r, j+r))
- rows <- wrap(rows, i, r, dim(M)[1])
- cols <- wrap(cols, j, r, dim(M)[2])
-} 
+Apply this function to the rows/columns
 
-neighborhood <- cbind(rows, cols)
+```{r}
+wrapped_neighborhood <- neighborhood
+wrapped_neighborhood[,1] <- sapply(neighborhood[,1], wrap, r, dim(M)[1])
+wrapped_neighborhood[,2] <- sapply(neighborhood[,2], wrap, r, dim(M)[2])
+wrapped_neighborhood 
 ```
 
 
-Note that this does not handle the case of a neighborhood that is larger than the matrix in some dimension; e.g. we don't guarentee $i+r+1<n$, etc.  
+Note that this does not handle the case of a neighborhood that is larger than the matrix in some dimension; e.g. we don't guarentee `i+r+1<n`, etc.  
 
