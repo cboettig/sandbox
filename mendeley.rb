@@ -537,6 +537,7 @@ end
       category = m.folder_documents(@category, 1, 10000)  # max of 10000 items, should get max from all_categories[]['size']
 #      category = m.folder_documents("56626111",1, 10)
 
+      file = @category + "_library.json" 
 
       if !File.exist?("library.json") 
         doc_ids = JSON.parse(category.body)["document_ids"]
@@ -548,12 +549,12 @@ end
         end
         ## Sort everything in the library by date added
         library = library.sort_by { |k| k["date_added"] }
-        # Write out 
-        File.open("library.json","w") do |f|
+        # Write out
+        File.open(file, "w") do |f|
             f.write(JSON.pretty_generate(library))
         end
       else 
-        buffer = open('library.json')
+        buffer = open(file)
         library = JSON.load(buffer) 
       end 
 

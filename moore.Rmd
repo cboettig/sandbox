@@ -18,7 +18,7 @@ j <- sample(1:dim(M)[2], 1)  # another random number between 1 and 8
 
 And then grab all the points in the Moore neighborhood 
 
-```
+```{r}
 r <- 1
 neighborhood <- 
 cbind(c(i-r, i,   i+r, i-r, i,  i+r,  i-r, i,   i+r),
@@ -40,9 +40,9 @@ wrapped_neighborhood[,2] <- (neighborhood[,2] - 1) %% dim(M)[2] + 1
 ```
 
 
-Clearly this can be extended to $r > 1$. 
+This can be extended to $r > 1$. 
 
-```
+```{r}
 r_max <- 3
 rows <- numeric(0)
 cols <- numeric(0)
@@ -61,7 +61,35 @@ Once again we have to deal with boundary cases, e.g. wrapping as before:
 wrapped_neighborhood <- neighborhood
 wrapped_neighborhood[,1] <- (neighborhood[,1] - 1) %% dim(M)[1] + 1
 wrapped_neighborhood[,2] <- (neighborhood[,2] - 1) %% dim(M)[2] + 1
+```
 
 
 
+What if we wanted to wrap just the neighborhood if we hit the boundary?
+
+```{r}
+r_max <- 3
+rows <- numeric(0)
+cols <- numeric(0)
+
+wrap <- function(i, r, n){
+ if(i-r < 0)
+   out <- i+r+1
+ if(i+r > n)
+   out <- i-r-1
+ out
+}
+
+for(r in 1:r_max){
+ rows <- c(rows, c(i-r, i,   i+r, i-r, i,  i+r,  i-r, i,   i+r))
+ cols <- c(cols, c(j-r, j-r, j-r, j,   j,  j,    j+r, j+r, j+r))
+ rows <- wrap(rows, i, r, dim(M)[1])
+ cols <- wrap(cols, j, r, dim(M)[2])
+} 
+
+neighborhood <- cbind(rows, cols)
+```
+
+
+Note that this does not handle the case of a neighborhood that is larger than the matrix in some dimension; e.g. we don't guarentee $i+r+1<n$, etc.  
 

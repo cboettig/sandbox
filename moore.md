@@ -21,12 +21,13 @@ j <- sample(1:dim(M)[2], 1)  # another random number between 1 and 8
 
 And then grab all the points in the Moore neighborhood 
 
-```
+
+```r
 r <- 1
-neighborhood <- 
-cbind(c(i-r, i,   i+r, i-r, i,  i+r,  i-r, i,   i+r),
-      c(j-r, j-r, j-r, j,   j,  j,    j+r, j+r, j+r))
+neighborhood <- cbind(c(i - r, i, i + r, i - r, i, i + r, i - r, i, i + r), 
+    c(j - r, j - r, j - r, j, j, j, j + r, j + r, j + r))
 ```
+
 
 We can then access the cells from M in our neighborhood.  We tell R to display these points as a matrix 
 
@@ -36,7 +37,10 @@ matrix(M[neighborhood], nrow = 3)
 ```
 
 ```
-## Error: object 'neighborhood' not found
+##         [,1]     [,2]     [,3]
+## [1,] -1.5540  0.69641  0.37012
+## [2,] -0.7645 -0.23802 -1.65624
+## [3,] -0.1179  0.03133  0.03626
 ```
 
 
@@ -45,48 +49,75 @@ matrix(M[neighborhood], nrow = 3)
 
 ```r
 wrapped_neighborhood <- neighborhood
-```
-
-```
-## Error: object 'neighborhood' not found
-```
-
-```r
 wrapped_neighborhood[, 1] <- (neighborhood[, 1] - 1)%%dim(M)[1] + 1
-```
-
-```
-## Error: object 'neighborhood' not found
-```
-
-```r
 wrapped_neighborhood[, 2] <- (neighborhood[, 2] - 1)%%dim(M)[2] + 1
 ```
 
-```
-## Error: object 'neighborhood' not found
-```
 
 
+This can be extended to $r > 1$. 
 
-Clearly this can be extended to $r > 1$. 
 
-```
+```r
 r_max <- 3
 rows <- numeric(0)
 cols <- numeric(0)
 
-for(r in 1:r_max){
- rows <- c(rows, c(i-r, i,   i+r, i-r, i,  i+r,  i-r, i,   i+r))
- cols <- c(cols, c(j-r, j-r, j-r, j,   j,  j,    j+r, j+r, j+r))
-} 
+for (r in 1:r_max) {
+    rows <- c(rows, c(i - r, i, i + r, i - r, i, i + r, i - r, i, i + r))
+    cols <- c(cols, c(j - r, j - r, j - r, j, j, j, j + r, j + r, j + r))
+}
+
+neighborhood <- cbind(rows, cols)
+```
+
+
+Once again we have to deal with boundary cases, e.g. wrapping as before:  
+
+
+```r
+wrapped_neighborhood <- neighborhood
+wrapped_neighborhood[, 1] <- (neighborhood[, 1] - 1)%%dim(M)[1] + 1
+wrapped_neighborhood[, 2] <- (neighborhood[, 2] - 1)%%dim(M)[2] + 1
+```
+
+
+
+
+What if we wanted to wrap just the neighborhood if we hit the boundary?
+
+
+```r
+r_max <- 3
+rows <- numeric(0)
+cols <- numeric(0)
+
+wrap <- function(i, r, n) {
+    if (i - r < 0) 
+        out <- i + r + 1
+    if (i + r > n) 
+        out <- i - r - 1
+    out
+}
+
+for (r in 1:r_max) {
+    rows <- c(rows, c(i - r, i, i + r, i - r, i, i + r, i - r, i, i + r))
+    cols <- c(cols, c(j - r, j - r, j - r, j, j, j, j + r, j + r, j + r))
+    rows <- wrap(rows, i, r, dim(M)[1])
+    cols <- wrap(cols, j, r, dim(M)[2])
+}
+```
+
+```
+## Error: unused argument (dim(M)[1])
+```
+
+```r
 
 neighborhood <- cbind(rows, cols)
 ```
 
 
 
-
-
-
+Note that this does not handle the case of a neighborhood that is larger than the matrix in some dimension; e.g. we don't guarentee $i+r+1<n$, etc.  
 
