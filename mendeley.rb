@@ -534,26 +534,28 @@ end
       all_categores = JSON.parse(category_ids.body)
      
       puts "Get doc id numbers from category"
-#      category = m.folder_documents(@category, 1, 10000)  # max of 10000 items, should get max from all_categories[]['size']
-      category = m.folder_documents("56626111",1, 10)
-
-      puts "Extract the document ids"
-      doc_ids = JSON.parse(category.body)["document_ids"]
-
-      ## GOODNESS GRACIOUS, Mendeley forces us to make an API call for EACH DOCUMENT IN THE LIBRARY  
-      library = Array.new
-      doc_ids.each do |article| 
-        docs = m.library_doc_details(article)
-        library << JSON.parse(docs.body)
-      end
+      category = m.folder_documents(@category, 1, 10000)  # max of 10000 items, should get max from all_categories[]['size']
+#      category = m.folder_documents("56626111",1, 10)
 
 
-      ## Sort everything in the library by date added
-      library = library.sort_by { |k| k["date_added"] }
-
-      puts "Library created " + library.length.to_s
-
-      puts "count is" + @count.to_s + " is of class " + @count.class.to_s
+      if !File.exist?("library.json") 
+        doc_ids = JSON.parse(category.body)["document_ids"]
+        ## GOODNESS GRACIOUS, Mendeley forces us to make an API call for EACH DOCUMENT IN THE LIBRARY  
+        library = Array.new
+        doc_ids.each do |article| 
+          docs = m.library_doc_details(article)
+          library << JSON.parse(docs.body)
+        end
+        ## Sort everything in the library by date added
+        library = library.sort_by { |k| k["date_added"] }
+        # Write out 
+        File.open("library.json","w") do |f|
+            f.write(JSON.pretty_generate(library))
+        end
+      else 
+        buffer = open('library.json')
+        library = JSON.load(buffer) 
+      end 
 
       ## Generate the output 
       out = "<ul>" + "\n"
