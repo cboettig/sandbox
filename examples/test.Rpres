@@ -15,7 +15,6 @@ For more details on authoring R presentations click the
 
 ```{r}
 sessionInfo()
-opts_knit$set(upload.fun = image_uri)
 ```
 
 
