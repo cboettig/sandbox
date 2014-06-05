@@ -1,37 +1,30 @@
 
 
 
+Using capital R to indicate language:
+
+```R
+library("devtools")
+x <- 1 + 1
+y = "b"
+```
+
+
+and using little r to indicate langauge:
+
 
 ```r
-m <- matrix(rnorm(100), nrow = 10)
+library("devtools")
+x <- 1 + 1
+y = "b"
 ```
 
+And how about pandoc / knitr braces?
 
-
-
-
-
-
-```r
-testObject <- function(object) {
-    exists(as.character(substitute(object)))
-}
-
-if (testObject(m)) {
-    # case (1)
-    print("matrix exist\n")
-} else {
-    # case (2)
-    print("matrix does not exist\n")
-    m <- matrix(1:4, nrow = 2)
-    cat("newly created matrix m:", m, "\n")
-}
-```
-
-
-
-```
-## [1] "matrix exist\n"
+```{R }
+library("devtools")
+x <- 1 + 1
+y = "b"
 ```
 
 

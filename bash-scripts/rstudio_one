@@ -1,0 +1,4 @@
+#!/bin/sh
+
+ssh -o "ExitOnForwardFailure yes" -f -N -L 1234:localhost:8787 one
+
