@@ -12,15 +12,9 @@ dat <- melt(by_species, id = c("catch", "year"))[, -5]
 ## CB says: Looks like type is always "species", and you don't define metadata for it, so let's drop that column
 dat <- dat[-3]
 names(dat) <- c("catch", "year", "a3_code")
+ggplot(dat, aes(year, catch)) + geom_line() + facet_wrap(~a3_code, scales = "free_y") + theme_bw()
 
 
-## CB says: Currently eml will write the csv file itself, so this isn't necessary.  Maybe we should rethink that though, since 
-## users may often already have a .csv they want to annotate without importing into R?
-write.csv(dat, file = "dat.csv")
-
-# plot the data
-ggplot(dat, aes(year, catch)) + geom_line() + facet_wrap(~a3_code, scales = "free_y")
- 
 library(data.table)
 species <- data.table(species)
 setkey(species, "a3_code")
@@ -28,6 +22,9 @@ code_names <- species[who, scientific_name]
 codes <- code_names$scientific_name
 names(codes) <- code_names$a3_code
 codes
+
+# plot the data
+ggplot(dat, aes(year, catch)) + geom_line() + facet_wrap(~a3_code, scales = "free_y")
 
 ## year is a numeric, which needs an origin. Make it a character so R can interpret it as a date in %Y format
 dat$year <- as.Date(as.character(dat$year), '%Y')
